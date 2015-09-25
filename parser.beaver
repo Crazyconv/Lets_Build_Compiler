@@ -22,14 +22,6 @@
 // declaration of start symbol; no need to change this
 %goal Module;
 
-// temporary declaration, you can remove this once you have written all other rules
-%goal Dummy;
-
-/* TODO: Flesh out the rule for Module, and add rules for other nonterminals. Here is an example
-         of a rule you may want to add:
-         
-*/
-
 Accessibility = PUBLIC
 		      |
 		      ;
@@ -76,11 +68,14 @@ ArrayType = PrimitiveType LBRACKET RBRACKET ArrayTypeTail
 ArrayTypeTail = LBRACKET RBRACKET ArrayTypeTail
               | 
               ;
-              
-ParameterList = Parameter
-              | Parameter COMMA ParameterList
+
+ParameterList = NonEmpParameterList
               |
               ;
+              
+NonEmpParameterList = Parameter
+                    | Parameter COMMA NonEmpParameterList
+                    ;
               
 Parameter = TypeName ID;
 
@@ -161,21 +156,10 @@ PrimaryExpression = LHExpression
                   | LPAREN Expression RPAREN
                   ;
                 
-ExpressionList = Expression
-               | Expression COMMA ExpressionList
+ExpressionList = NonEmpExpressionList
                |
                ;
                
 NonEmpExpressionList = Expression
                      | Expression COMMA NonEmpExpressionList
                      ;
-
-
-
-
-
-/**/
-
-/* Dummy rule to make the lexer compile. Remove this once you have written all other rules. */	  
-Dummy = MODULE INT VOID IF ELSE WHILE RETURN BREAK BOOLEAN PUBLIC TRUE FALSE INT_LITERAL STRING_LITERAL ID TYPE IMPORT
-           PLUS MINUS TIMES DIV MOD EQEQ NEQ LEQ GEQ LT GT LBRACKET RPAREN COMMA RCURLY LCURLY SEMICOLON RBRACKET LPAREN EQL;
